@@ -1,4 +1,3 @@
-### Hey,
 
 I like building the unglamorous parts of AI systems — the orchestration, the
 evaluation harnesses, and the guardrails that keep autonomous agents from doing
