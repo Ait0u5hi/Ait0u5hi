@@ -1,5 +1,5 @@
 
-I like building the unglamorous parts of AI systems — the orchestration, the
+I like building orchestrations, the
 evaluation harnesses, and the guardrails that keep autonomous agents from doing
 something dumb. Most of my time goes into making agent infrastructure reliable
 enough to actually trust.
