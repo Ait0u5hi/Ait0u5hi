@@ -1,0 +1,24 @@
+name: Metrics
+on:
+  schedule: [{ cron: "0 8 * * *" }]      # daily refresh
+  workflow_dispatch:                      # manual trigger for the first run
+  push: { branches: ["main", "profile-revamp"] }
+permissions:
+  contents: write
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      # pinned to metrics v3.34 (commit 6583672)
+      - uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: Ait0u5hi
+          filename: github-metrics.svg
+          config_timezone: America/Chicago
+          base: header, activity, repositories, metadata
+          plugin_languages: yes
+          plugin_languages_details: bytes-size, percentage
+          plugin_languages_limit: 8
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
