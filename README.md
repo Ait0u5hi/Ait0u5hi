@@ -1,4 +1,8 @@
-<img width="100%" alt="Noah - AI-agent infrastructure, ML tooling, evals and CI/CD" src="./header.png" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./header-dark.png" />
+  <source media="(prefers-color-scheme: light)" srcset="./header-light.png" />
+  <img width="100%" alt="Ait0u5hi - AI-agent infrastructure, ML tooling, evals and CI/CD" src="./header-dark.png" />
+</picture>
 
 <p align="center">
   <img alt="Building agent fleets that open their own PRs" src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=3000&pause=800&color=6F82F7&center=true&vCenter=true&width=680&lines=Building+agent+fleets+that+open+their+own+PRs;Evaluation+harnesses+that+turn+%22it+works%22+into+a+number;Guardrails+that+keep+autonomous+agents+honest;Prototyped+end+to+end+on+a+homelab+cluster" />
