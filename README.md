@@ -1,4 +1,4 @@
-<img width="100%" alt="Noah - AI-agent infrastructure, ML tooling, evals and CI/CD" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Noah%20%C2%B7%20Ait0u5hi&fontSize=46&fontColor=ffffff&animation=fadeIn&desc=AI-agent%20infrastructure%20%7C%20ML%20tooling%20%7C%20evals%20%26%20CI%2FCD&descSize=18&descAlignY=62" />
+<img width="100%" alt="Noah - AI-agent infrastructure, ML tooling, evals and CI/CD" src="./header.svg" />
 
 <p align="center">
   <img alt="Building agent fleets that open their own PRs" src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=3000&pause=800&color=6F82F7&center=true&vCenter=true&width=680&lines=Building+agent+fleets+that+open+their+own+PRs;Evaluation+harnesses+that+turn+%22it+works%22+into+a+number;Guardrails+that+keep+autonomous+agents+honest;Prototyped+end+to+end+on+a+homelab+cluster" />
