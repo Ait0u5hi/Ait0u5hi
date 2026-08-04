@@ -16,6 +16,7 @@ jobs:
           user: Ait0u5hi
           filename: github-metrics.svg
           config_timezone: America/Chicago
+          config_display: large
           base: header, activity, repositories, metadata
           plugin_languages: yes
           plugin_languages_details: bytes-size, percentage
