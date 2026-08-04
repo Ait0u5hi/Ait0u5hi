@@ -5,7 +5,7 @@
 </picture>
 
 <p align="center">
-  <img alt="Building agent fleets that open their own PRs" src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=3000&pause=800&color=6F82F7&center=true&vCenter=true&width=680&lines=Building+agent+fleets+that+open+their+own+PRs;Evaluation+harnesses+that+turn+%22it+works%22+into+a+number;Guardrails+that+keep+autonomous+agents+honest;Prototyped+end+to+end+on+a+homelab+cluster" />
+  <img alt="Building orchestrated agent fleets that self-review their own PRs" src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=20&duration=3000&pause=800&color=6F82F7&center=true&vCenter=true&width=680&lines=Building+orchestrated+agent+fleets+that+self-review+their+own+PRs;Evaluation+harnesses+that+turn+%22it+works%22+into+a+number;Guardrails+that+keep+autonomous+agents+honest;Prototyped+end+to+end+on+a+homelab+cluster" />
 </p>
 
 <p align="center">
@@ -23,7 +23,7 @@ Systems-layer work, prototyped end to end on a self-hosted homelab cluster, and
 open-sourced where it holds up.
 
 **Currently into:** LLM agents, evals and benchmarking, multi-node model serving,
-agent fleets that open their own PRs, DevSecOps and CI/CD guardrails, local model
+orchestrated agent fleets that dispatch, build, and self-review their own PRs, DevSecOps and CI/CD guardrails, local model
 inference, prompt/tool-calling reliability, and squeezing real work out of
 homelab-scale ML infra.
 
