@@ -16,13 +16,16 @@
 ---
 
 ### About
-I build the orchestration, evaluation harnesses, and safety tooling that make
-autonomous agents reliable enough to actually trust: multi-node model serving,
-agent fleets that open their own pull requests, and the CI/CD and guardrails
-wrapped around them, all prototyped on a small homelab cluster.
+**Engineering the agentic frontier:** pushing autonomous agents from frontier
+demos to reliable, production systems.
 
-**Currently into:** LLM agents, evaluation and benchmarking, DevSecOps, and
-squeezing real work out of homelab-scale ML infra.
+Systems-layer work, prototyped end to end on a self-hosted homelab cluster, and
+open-sourced where it holds up.
+
+**Currently into:** LLM agents, evals and benchmarking, multi-node model serving,
+agent fleets that open their own PRs, DevSecOps and CI/CD guardrails, local model
+inference, prompt/tool-calling reliability, and squeezing real work out of
+homelab-scale ML infra.
 
 ### Stack
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
