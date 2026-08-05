@@ -8,6 +8,7 @@ from collections import defaultdict
 USER  = os.environ.get("GH_USER", "Ait0u5hi")
 TOKEN = os.environ["GH_TOKEN"]
 TODAY = datetime.date.today()
+W = 540
 
 def _req(url, data=None, headers=None):
     h = {"Authorization": f"bearer {TOKEN}", "User-Agent": "terminal-card"}
@@ -34,15 +35,16 @@ u = gql(f'''query {{ user(login:"{USER}") {{
 cc = u["contributionsCollection"]
 weeks = cc["contributionCalendar"]["weeks"]
 
+prof = rest(f"users/{USER}")
 repos = rest(f"users/{USER}/repos?per_page=100")
 stars = sum(r["stargazers_count"] for r in repos)
-watchers = sum(r["watchers_count"] for r in repos)
+forks = sum(r["forks_count"] for r in repos)
 nrepos = len(repos)
 lang_bytes = defaultdict(int)
 for r in repos:
     for k, v in rest(f"repos/{USER}/{r['name']}/languages").items():
         lang_bytes[k] += v
-top = sorted(lang_bytes.items(), key=lambda x: -x[1])[:5]
+top = sorted(lang_bytes.items(), key=lambda x: -x[1])[:6]
 tot = sum(v for _, v in top) or 1
 langs = [(k, 100*v/tot) for k, v in top]
 
@@ -53,11 +55,16 @@ streak = 0
 for c in reversed(allc):
     if c > 0: streak += 1
     else: break
-DATA = dict(name=u["name"] or USER, followers=u["followers"]["totalCount"], age=age,
-            commits=cc["totalCommitContributions"], prs=cc["totalPullRequestContributions"],
-            reviews=cc["totalPullRequestReviewContributions"],
-            repos=nrepos, stars=stars, watchers=watchers, langs=langs, weeks=weeks,
-            total_year=cc["contributionCalendar"]["totalContributions"], streak=streak)
+total_year = cc["contributionCalendar"]["totalContributions"]
+bio = (prof.get("bio") or "").replace(" — ", " · ").replace("—", "-").strip()
+maxc = int((W - 2*14) / 7.8)                         # fit bio to card width
+if len(bio) > maxc: bio = bio[:maxc-1].rstrip() + "…"
+DATA = dict(name=u["name"] or USER, followers=u["followers"]["totalCount"],
+            following=prof.get("following", 0), age=age, location=prof.get("location") or "",
+            bio=bio, commits=cc["totalCommitContributions"], prs=cc["totalPullRequestContributions"],
+            reviews=cc["totalPullRequestReviewContributions"], issues=cc["totalIssueContributions"],
+            repos=nrepos, stars=stars, forks=forks, langs=langs, weeks=weeks,
+            total_year=total_year, streak=streak, avg=total_year/365.0)
 
 # ---- render ----
 PAL = {
@@ -84,11 +91,15 @@ def render(theme, out):
         s.append(f'<text x="{PADX}" y="{y}" font-size="{FS}" font-family="monospace" fill="{c or P["muted"]}" xml:space="preserve">{esc(t)}</text>')
     y=34
     prompt(y,"whoami"); y+=LH
-    out_(y,f"{D['name']}  registered {D['age']}y  {D['followers']} followers",P["fg"]); y+=int(LH*1.4)
+    loc = f" · {D['location']}" if D['location'] else ""
+    out_(y,f"{D['name']}{loc} · registered {D['age']}y",P["fg"]); y+=int(LH*1.4)
+    if D['bio']:
+        prompt(y,"cat ~/.plan"); y+=LH
+        out_(y,D['bio'],P["fg"]); y+=int(LH*1.4)
     prompt(y,"git log --oneline | wc -l"); y+=LH
-    out_(y,f"{D['commits']} commits   {D['prs']} PRs   {D['reviews']} reviews",P["fg"]); y+=int(LH*1.4)
+    out_(y,f"{D['commits']} commits · {D['prs']} PRs · {D['reviews']} reviews · {D['issues']} issues",P["fg"]); y+=int(LH*1.4)
     prompt(y,"ls -l repos/"); y+=LH
-    out_(y,f"{D['repos']} repos   {D['stars']} stars   {D['watchers']} watching",P["fg"]); y+=int(LH*1.4)
+    out_(y,f"{D['repos']} repos · {D['stars']} stars · {D['forks']} forks · {D['followers']} followers",P["fg"]); y+=int(LH*1.4)
     prompt(y,"cat languages"); y+=LH
     bx=PADX+12*CW; bw=W-bx-PADX-60
     for name,pct in D["langs"]:
@@ -103,7 +114,8 @@ def render(theme, out):
     mx=max((d["contributionCount"] for w in recent for d in w["contributionDays"]),default=1)
     a,b=9,4.5; baseH=4; MAX=40
     ix=[(wi-wd) for wi in range(len(recent)) for wd in range(7)]
-    originX=(W-(max(ix)-min(ix))*a)/2-min(ix)*a; originY=y+4
+    originX=(W-(max(ix)-min(ix))*a)/2-min(ix)*a
+    originY=y+6+baseH+MAX                        # reserve headroom so towers rise up
     cubes=[]
     for wi,w in enumerate(recent):
         for d in w["contributionDays"]:
@@ -111,15 +123,16 @@ def render(theme, out):
             px=originX+(wi-d["weekday"])*a; py=originY+(wi+d["weekday"])*b
             L=lvl(c,mx); top=P["ground"] if L<0 else P["cal"][L]
             cubes.append((py,px,H,top))
-    cubes.sort(key=lambda c:c[0]); bottom=0
+    cubes.sort(key=lambda c:c[0]); front=0       # painter's: back(low py) -> front
     for py,px,H,top in cubes:
-        bottom=max(bottom,py+H)
-        N=(px,py-b);E=(px+a,py);S=(px,py+b);Wp=(px-a,py);Sd=(S[0],S[1]+H);Ed=(E[0],E[1]+H);Wd=(Wp[0],Wp[1]+H)
-        s.append(f'<polygon points="{Wp[0]:.1f},{Wp[1]:.1f} {S[0]:.1f},{S[1]:.1f} {Sd[0]:.1f},{Sd[1]:.1f} {Wd[0]:.1f},{Wd[1]:.1f}" fill="{shade(top,.55)}"/>')
-        s.append(f'<polygon points="{S[0]:.1f},{S[1]:.1f} {E[0]:.1f},{E[1]:.1f} {Ed[0]:.1f},{Ed[1]:.1f} {Sd[0]:.1f},{Sd[1]:.1f}" fill="{shade(top,.78)}"/>')
-        s.append(f'<polygon points="{N[0]:.1f},{N[1]:.1f} {E[0]:.1f},{E[1]:.1f} {S[0]:.1f},{S[1]:.1f} {Wp[0]:.1f},{Wp[1]:.1f}" fill="{top}"/>')
-    y=bottom+34
-    out_(y,f"{D['total_year']} contributions   {D['streak']}-day streak",P["fg"]); y+=int(LH*1.4)
+        front=max(front,py+b)
+        N=(px,py-b);E=(px+a,py);S=(px,py+b);Wp=(px-a,py)          # ground footprint
+        Nt=(px,py-b-H);Et=(px+a,py-H);St=(px,py+b-H);Wt=(px-a,py-H)  # elevated top (rises up)
+        s.append(f'<polygon points="{Wp[0]:.1f},{Wp[1]:.1f} {S[0]:.1f},{S[1]:.1f} {St[0]:.1f},{St[1]:.1f} {Wt[0]:.1f},{Wt[1]:.1f}" fill="{shade(top,.55)}"/>')
+        s.append(f'<polygon points="{S[0]:.1f},{S[1]:.1f} {E[0]:.1f},{E[1]:.1f} {Et[0]:.1f},{Et[1]:.1f} {St[0]:.1f},{St[1]:.1f}" fill="{shade(top,.78)}"/>')
+        s.append(f'<polygon points="{Nt[0]:.1f},{Nt[1]:.1f} {Et[0]:.1f},{Et[1]:.1f} {St[0]:.1f},{St[1]:.1f} {Wt[0]:.1f},{Wt[1]:.1f}" fill="{top}"/>')
+    y=front+34
+    out_(y,f"{D['total_year']} contributions · {D['streak']}-day streak · ~{D['avg']:.1f}/day",P["fg"]); y+=int(LH*1.4)
     s.append(f'<text x="{PADX}" y="{y}" font-size="{FS}" font-family="monospace" xml:space="preserve">'
              f'<tspan fill="{P["green"]}">{USER.lower()}@worldsim</tspan><tspan fill="{P["muted"]}">:</tspan>'
              f'<tspan fill="{P["blue"]}">~</tspan><tspan fill="{P["muted"]}">$ </tspan>'
