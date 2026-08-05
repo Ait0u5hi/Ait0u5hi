@@ -16,6 +16,7 @@ jobs:
           user: Ait0u5hi
           filename: github-metrics.svg
           template: terminal
+          config_animations: no
           config_timezone: America/Chicago
           base: header, activity, repositories, metadata
           plugin_languages: yes
@@ -23,4 +24,4 @@ jobs:
           plugin_languages_limit: 5
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
-          extras_css: "pre { background: transparent !important; color: #6e7681 !important } .header, .buttons { display: none !important } .isocalendar svg { filter: none !important } .banner, footer { color: #6e7681 !important } b, strong { color: #6e7681 !important } .ps1-path { color: #2ea043 !important } .ps1-location { color: #4493f8 !important } .stdin { animation-duration: 0.56s !important } .stdout { animation-duration: 0.98s !important } .stdin:nth-of-type(1) { animation-delay: 0.0s !important } .stdin:nth-of-type(2) { animation-delay: 1.54s !important } .stdin:nth-of-type(3) { animation-delay: 3.08s !important } .stdin:nth-of-type(4) { animation-delay: 4.62s !important } .stdin:nth-of-type(5) { animation-delay: 6.16s !important } .stdin:nth-of-type(6) { animation-delay: 7.7s !important } .stdin:nth-of-type(7) { animation-delay: 9.24s !important } .stdin:nth-of-type(8) { animation-delay: 10.78s !important } .stdin:nth-of-type(9) { animation-delay: 12.32s !important } .stdout:nth-of-type(2) { animation-delay: 0.56s !important } .stdout:nth-of-type(3) { animation-delay: 2.1s !important } .stdout:nth-of-type(4) { animation-delay: 3.64s !important } .stdout:nth-of-type(5) { animation-delay: 5.18s !important } .stdout:nth-of-type(6) { animation-delay: 6.72s !important } .stdout:nth-of-type(7) { animation-delay: 8.26s !important } .stdout:nth-of-type(8) { animation-delay: 9.8s !important } .stdout:nth-of-type(9) { animation-delay: 11.34s !important } .stdout:nth-of-type(10) { animation-delay: 12.88s !important } footer { animation-delay: 12.32s !important }"
+          extras_css: "pre { background: transparent !important; color: #6e7681 !important } .header, .buttons { display: none !important } .isocalendar svg { filter: none !important } .banner, footer { color: #6e7681 !important } b, strong { color: #6e7681 !important } .ps1-path { color: #2ea043 !important } .ps1-location { color: #4493f8 !important }"
