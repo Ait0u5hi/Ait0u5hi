@@ -1,0 +1,27 @@
+name: Terminal Card
+on:
+  schedule: [{ cron: "0 8 * * *" }]      # daily refresh
+  workflow_dispatch:
+  push: { branches: ["main"], paths: ["render_terminal.py", ".github/workflows/terminal-card.yml"] }
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+      - name: Render terminal stat cards (dark + light)
+        env:
+          GH_USER: Ait0u5hi
+          GH_TOKEN: ${{ secrets.METRICS_TOKEN }}   # classic PAT (GraphQL)
+        run: python render_terminal.py
+      - name: Commit updated cards
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add github-terminal-dark.svg github-terminal-light.svg
+          git diff --cached --quiet || git commit -m "Update terminal cards [skip ci]"
+          git push

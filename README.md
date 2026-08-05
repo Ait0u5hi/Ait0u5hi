@@ -42,9 +42,13 @@ homelab-scale ML infra.
 ---
 
 ### GitHub, rendered natively via Actions
-<!-- generated + committed by .github/workflows/metrics.yml (lowlighter/metrics) -->
+<!-- generated + committed by .github/workflows/terminal-card.yml (custom) -->
 <p align="center">
-  <img alt="GitHub metrics: activity, languages, and contribution calendar" src="./github-metrics.svg" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./github-terminal-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./github-terminal-light.svg" />
+    <img width="540" alt="Ait0u5hi terminal stats: activity, languages, and contributions" src="./github-terminal-dark.svg" />
+  </picture>
 </p>
 
 ---
