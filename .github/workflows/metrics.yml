@@ -23,4 +23,4 @@ jobs:
           plugin_languages_limit: 5
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
-          extras_css: "pre { background: #0d1117 !important; color: #d0d7de !important } .header { display: none !important } .buttons { display: none !important } .isocalendar svg { filter: none !important }"
+          extras_css: "pre { background: transparent !important; color: #6e7681 !important } .header, .buttons { display: none !important } .isocalendar svg { filter: none !important } .banner, footer { color: #6e7681 !important } b, strong { color: #6e7681 !important } .ps1-path { color: #2ea043 !important } .ps1-location { color: #4493f8 !important }"
