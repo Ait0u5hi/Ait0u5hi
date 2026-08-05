@@ -57,11 +57,15 @@ for c in reversed(allc):
     else: break
 total_year = cc["contributionCalendar"]["totalContributions"]
 bio = (prof.get("bio") or "").replace(" — ", " · ").replace("—", "-").strip()
-maxc = int((W - 2*14) / 7.8)                         # fit bio to card width
-if len(bio) > maxc: bio = bio[:maxc-1].rstrip() + "…"
+# featured/pinned projects (name, short descriptor) -- edit to change what's shown
+FEATURED = [("hermes-agent", "agent framework"),
+            ("gh-workflows", "reusable CI/CD"),
+            ("hermes-plugin-workspace-guard", "agent sandbox")]
+featured = FEATURED
 DATA = dict(name=u["name"] or USER, followers=u["followers"]["totalCount"],
             following=prof.get("following", 0), age=age, location=prof.get("location") or "",
-            bio=bio, commits=cc["totalCommitContributions"], prs=cc["totalPullRequestContributions"],
+            bio=bio, featured=featured,
+            commits=cc["totalCommitContributions"], prs=cc["totalPullRequestContributions"],
             reviews=cc["totalPullRequestReviewContributions"], issues=cc["totalIssueContributions"],
             repos=nrepos, stars=stars, forks=forks, langs=langs, weeks=weeks,
             total_year=total_year, streak=streak, avg=total_year/365.0)
@@ -89,17 +93,34 @@ def render(theme, out):
                  f'<tspan fill="{P["fg"]}">{esc(cmd)}</tspan></text>')
     def out_(y,t,c=None):
         s.append(f'<text x="{PADX}" y="{y}" font-size="{FS}" font-family="monospace" fill="{c or P["muted"]}" xml:space="preserve">{esc(t)}</text>')
+    maxc = int((W - 2*PADX) / CW)
+    def wrap(t, n):
+        words=t.split(); lines=[]; cur=""
+        for w in words:
+            if len(cur)+len(w)+1 <= n: cur=(cur+" "+w).strip()
+            else: lines.append(cur); cur=w
+        if cur: lines.append(cur)
+        return lines[:2]
     y=34
     prompt(y,"whoami"); y+=LH
     loc = f" · {D['location']}" if D['location'] else ""
     out_(y,f"{D['name']}{loc} · registered {D['age']}y",P["fg"]); y+=int(LH*1.4)
     if D['bio']:
         prompt(y,"cat ~/.plan"); y+=LH
-        out_(y,D['bio'],P["fg"]); y+=int(LH*1.4)
+        for ln in wrap(D['bio'], maxc):
+            out_(y,ln,P["fg"]); y+=LH
+        y+=int(LH*0.4)
     prompt(y,"git log --oneline | wc -l"); y+=LH
     out_(y,f"{D['commits']} commits · {D['prs']} PRs · {D['reviews']} reviews · {D['issues']} issues",P["fg"]); y+=int(LH*1.4)
     prompt(y,"ls -l repos/"); y+=LH
-    out_(y,f"{D['repos']} repos · {D['stars']} stars · {D['forks']} forks · {D['followers']} followers",P["fg"]); y+=int(LH*1.4)
+    out_(y,f"{D['repos']} repos · {D['stars']} stars · {D['forks']} forks · {D['followers']} followers · {D['following']} following",P["fg"]); y+=int(LH*1.4)
+    if D['featured']:
+        prompt(y,"ls ~/projects"); y+=LH
+        for name, desc in D['featured']:
+            s.append(f'<text x="{PADX}" y="{y}" font-size="{FS}" font-family="monospace" fill="{P["green"]}">{esc(name)}</text>')
+            s.append(f'<text x="{PADX+31*CW:.0f}" y="{y}" font-size="{FS}" font-family="monospace" fill="{P["muted"]}">{esc(desc)}</text>')
+            y+=LH
+        y+=int(LH*0.4)
     prompt(y,"cat languages"); y+=LH
     bx=PADX+12*CW; bw=W-bx-PADX-60
     for name,pct in D["langs"]:
