@@ -27,6 +27,8 @@ orchestrated agent fleets that dispatch, build, and self-review their own PRs, D
 inference, prompt/tool-calling reliability, and squeezing real work out of
 homelab-scale ML infra.
 
+meow :3
+
 ### Stack
 ![Python](https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
