@@ -2,7 +2,7 @@
 """Self-contained terminal-stats card generator for a GitHub profile README.
 Fetches live stats via the GitHub API and renders isometric-calendar SVGs
 for dark and light themes. Env: GH_USER, GH_TOKEN (classic PAT)."""
-import os, json, sys, datetime, urllib.request
+import os, json, sys, time, datetime, urllib.request, urllib.error
 from collections import defaultdict
 
 USER  = os.environ.get("GH_USER", "Ait0u5hi")
@@ -14,7 +14,13 @@ def _req(url, data=None, headers=None):
     h = {"Authorization": f"bearer {TOKEN}", "User-Agent": "terminal-card"}
     if headers: h.update(headers)
     r = urllib.request.Request(url, data=data, headers=h)
-    return json.load(urllib.request.urlopen(r, timeout=30))
+    for attempt in range(5):  # GitHub raw/API intermittently 429/5xx; back off and retry
+        try:
+            return json.load(urllib.request.urlopen(r, timeout=30))
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 502, 503, 504) and attempt < 4:
+                time.sleep(2 ** attempt); continue
+            raise
 
 def gql(query):
     body = json.dumps({"query": query}).encode()
