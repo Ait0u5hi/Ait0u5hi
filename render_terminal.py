@@ -40,10 +40,25 @@ repos = rest(f"users/{USER}/repos?per_page=100")
 stars = sum(r["stargazers_count"] for r in repos)
 forks = sum(r["forks_count"] for r in repos)
 nrepos = len(repos)
+# Language bar: owner-affiliated, non-fork repos of the token owner (incl.
+# private) via GraphQL -- so it reflects code we actually write, not forks.
+# NOTE: keeps the public `repos` list above for stars/forks/nrepos counts,
+# so only language *proportions* (not the private repo count) are disclosed.
 lang_bytes = defaultdict(int)
-for r in repos:
-    for k, v in rest(f"repos/{USER}/{r['name']}/languages").items():
-        lang_bytes[k] += v
+cursor = None
+while True:
+    after = f', after:"{cursor}"' if cursor else ""
+    page = gql(f'''query {{ viewer {{
+      repositories(first:100, ownerAffiliations:[OWNER], isFork:false{after}) {{
+        pageInfo {{ hasNextPage endCursor }}
+        nodes {{ languages(first:25, orderBy:{{field:SIZE, direction:DESC}}) {{
+          edges {{ size node {{ name }} }} }} }} }} }} }}''')["viewer"]["repositories"]
+    for repo in page["nodes"]:
+        for e in repo["languages"]["edges"]:
+            lang_bytes[e["node"]["name"]] += e["size"]
+    if not page["pageInfo"]["hasNextPage"]:
+        break
+    cursor = page["pageInfo"]["endCursor"]
 top = sorted(lang_bytes.items(), key=lambda x: -x[1])[:6]
 tot = sum(v for _, v in top) or 1
 langs = [(k, 100*v/tot) for k, v in top]
