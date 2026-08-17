@@ -47,9 +47,9 @@ meow :3
 <!-- generated + committed by .github/workflows/terminal-card.yml (custom) -->
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-dark.svg?v=2" />
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-light.svg?v=2" />
-    <img width="540" alt="Ait0u5hi terminal stats: activity, languages, and contributions" src="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-dark.svg?v=2" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-light.png" />
+    <img width="540" alt="Ait0u5hi terminal stats: activity, languages, and contributions" src="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-dark.png" />
   </picture>
 </p>
 

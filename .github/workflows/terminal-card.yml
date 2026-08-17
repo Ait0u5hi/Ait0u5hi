@@ -18,10 +18,19 @@ jobs:
           GH_USER: Ait0u5hi
           GH_TOKEN: ${{ secrets.METRICS_TOKEN }}   # classic PAT (GraphQL)
         run: python render_terminal.py
+      - name: Rasterize cards to PNG
+        # SVG served from raw.githubusercontent as text/plain proxies unreliably
+        # through GitHub's image cache; PNG (like the header) renders every time.
+        run: |
+          sudo apt-get update && sudo apt-get install -y libcairo2
+          pip install cairosvg
+          cairosvg github-terminal-dark.svg  -o github-terminal-dark.png  -s 2
+          cairosvg github-terminal-light.svg -o github-terminal-light.png -s 2
       - name: Commit updated cards
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add github-terminal-dark.svg github-terminal-light.svg
+          git add github-terminal-dark.svg github-terminal-light.svg \
+                  github-terminal-dark.png github-terminal-light.png
           git diff --cached --quiet || git commit -m "Update terminal cards [skip ci]"
           git push
