@@ -1,7 +1,7 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./header-dark.png" />
-  <source media="(prefers-color-scheme: light)" srcset="./header-light.png" />
-  <img width="100%" alt="Ait0u5hi - AI-agent infrastructure, ML tooling, evals and CI/CD" src="./header-dark.png" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/header-dark.png" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/header-light.png" />
+  <img width="100%" alt="Ait0u5hi - AI-agent infrastructure, ML tooling, evals and CI/CD" src="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/header-dark.png" />
 </picture>
 
 <p align="center">
@@ -47,9 +47,9 @@ meow :3
 <!-- generated + committed by .github/workflows/terminal-card.yml (custom) -->
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./github-terminal-dark.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="./github-terminal-light.svg" />
-    <img width="540" alt="Ait0u5hi terminal stats: activity, languages, and contributions" src="./github-terminal-dark.svg" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-light.svg" />
+    <img width="540" alt="Ait0u5hi terminal stats: activity, languages, and contributions" src="https://raw.githubusercontent.com/Ait0u5hi/Ait0u5hi/main/github-terminal-dark.svg" />
   </picture>
 </p>
 
