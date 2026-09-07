@@ -27,6 +27,7 @@ orchestrated agent fleets that dispatch, build, and self-review their own PRs, D
 inference, prompt/tool-calling reliability, and squeezing real work out of
 homelab-scale ML infra.
 
+Call be a saddler the way i build harnesses
 meow :3
 
 ### Stack
