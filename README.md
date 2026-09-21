@@ -16,11 +16,6 @@
 ---
 
 ### About
-**Engineering the agentic frontier:** pushing autonomous agents from frontier
-demos to reliable, production systems.
-
-Systems-layer work, prototyped end to end on a self-hosted homelab cluster, and
-open-sourced where it holds up.
 
 **Currently into:** LLM agents, evals and benchmarking, multi-node model serving,
 orchestrated agent fleets that dispatch, build, and self-review their own PRs, DevSecOps and CI/CD guardrails, local model
