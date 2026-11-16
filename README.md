@@ -55,8 +55,6 @@ meow :3
 ---
 
 ### Featured work
-- **[hermes-agent](https://github.com/Ait0u5hi/hermes-agent)** - agent framework (Python / TypeScript).
 - **[gh-workflows](https://github.com/Ait0u5hi/gh-workflows)** - reusable CI/CD + security-scanning workflows.
-- **[hermes-plugin-workspace-guard](https://github.com/Ait0u5hi/hermes-plugin-workspace-guard)** - worktree sandbox that gates autonomous agents.
 
-<sub>These three are also pinned on my profile below.</sub>
+<sub>Also pinned on my profile below.</sub>
